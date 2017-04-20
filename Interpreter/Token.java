@@ -1,10 +1,16 @@
 public class Token{
    private String lexeme;
    private String tokenType;
+   private int lineNumber;
    
-   public Token(String lexeme, String tokenType){
+   public Token(String lexeme, String tokenType, int lineNumber){
       this.lexeme = lexeme;
       this.tokenType = tokenType;
+      this.lineNumber = lineNumber;
+   }
+   
+   public int getLineNumber(){
+      return lineNumber;
    }
    
    public String getLexeme(){
@@ -21,5 +27,9 @@ public class Token{
    
    public void setTokenType(String tokenType){
       this.tokenType = tokenType;
+   }
+   
+   public void setLineNumber(int lineNumber){
+      this.lineNumber = lineNumber;
    }
 }

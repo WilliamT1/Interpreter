@@ -1,39 +1,47 @@
-import java.util.Scanner;
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.ArrayList;
-import java.io.File;
+import java.io.FileNotFoundException;
 
 public class Parser{
-   public List<Token> myTokens = new ArrayList<Token>();
-   private String tokenType;
+
+   public List<Token> myTokens;
+   private Analyzer lexicalAnalyzer;
    
    public Parser(String fileName) throws FileNotFoundException{
-      Scanner scan = new Scanner(new File(fileName));
+      lexicalAnalyzer = new Analyzer(fileName);
+   }
+   
       
-      while(scan.hasNext()){  
-         String lexeme = scan.next();
-         String tokenType = tokenAssigner(lexeme);
-         Token curToken = new Token(lexeme, tokenType);
-         
-         myTokens.add(curToken);
+   public void parse(){
+      Token myToken = removeNextToken();
+      if(isValidStart(myToken)){
+         if(myToken.getTokenType().equals("digit"))
+            getOperand(myToken);
       }
-   }    
-     
-   public String tokenAssigner(String lexeme){
-      if(lexeme.equals("-"))
-         tokenType = "Minus";
-      else if(lexeme.equals("+"))
-         tokenType = "Plus";
-      else if(lexeme.equals("/"))
-         tokenType = "Divide";
-      else if(lexeme.equals("*"))
-         tokenType = "Multiply";
-     return tokenType;
+   }
+   
+   public boolean isValidStart(Token myToken){
+      return myToken.getTokenType().equals("if_stmt") ||
+         myToken.getTokenType().equals("while_stmt") || 
+         myToken.getTokenType().equals("print_stmt") ||
+         myToken.getTokenType().equals("ID") ||
+         myToken.getTokenType().equals("digit") ||
+         myToken.getTokenType().equals("repeat_stmt");
+   }
+   
+   public Token removeNextToken(){
+      return lexicalAnalyzer.removeNextToken();
+   }
+   
+   public int getOperand(Token myToken){
+      Operator op = new Operator(Integer.valueOf(myToken.getLexeme()), removeNextToken().getTokenType(), Integer.valueOf(removeNextToken().getLexeme()));
+      System.out.print(op.evaluate());
+      return op.evaluate();
+   }
+   
+   public Token getNextToken(){
+      return lexicalAnalyzer.getNextToken();
    }
    
    
-   public List<Token> getMyTokenList(){
-      return myTokens;
-   }
 }
