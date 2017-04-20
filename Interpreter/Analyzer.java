@@ -14,7 +14,7 @@ public class Analyzer{
       
       while(scan.hasNextLine()){  
          lineAnalyzer(scan.nextLine(), lineNumber);
-         ++lineNumber;
+         lineNumber++;
       }
    }    
      

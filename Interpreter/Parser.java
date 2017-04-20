@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.io.FileNotFoundException;
 
 public class Parser{
-
+   public Id id = new Id();
    public List<Token> myTokens;
    private Analyzer lexicalAnalyzer;
    
@@ -16,6 +16,8 @@ public class Parser{
       Token myToken = removeNextToken();
       if(isValidStart(myToken)){
          if(myToken.getTokenType().equals("digit"))
+            getOperand(myToken);
+         else if(myToken.getTokenType().equals("ID"))
             getOperand(myToken);
       }
    }
@@ -33,14 +35,32 @@ public class Parser{
       return lexicalAnalyzer.removeNextToken();
    }
    
-   public int getOperand(Token myToken){
-      Operator op = new Operator(Integer.valueOf(myToken.getLexeme()), removeNextToken().getTokenType(), Integer.valueOf(removeNextToken().getLexeme()));
-      System.out.print(op.evaluate());
-      return op.evaluate();
+   public void getOperand(Token myToken){
+      if(myToken.getTokenType().equals("ID") && getNextToken().getTokenType().contains("assignment")){
+         myToken.setLexeme(myToken.getLexeme().toLowerCase());
+         char c = myToken.getLexeme().charAt(0);
+         id.setId(c);
+         removeNextToken();
+         id.store(Integer.parseInt(removeNextToken().getLexeme()));
+      }
+      else if(myToken.getTokenType().equals("ID") && getNextToken().getTokenType().contains("_operator")){
+         ArithmeticOperator op = new ArithmeticOperator(id, removeNextToken().getTokenType(), Integer.valueOf(removeNextToken().getLexeme()));
+         System.out.print(op.evaluate());
+      }
+      else{
+         ArithmeticOperator op = new ArithmeticOperator(Integer.valueOf(myToken.getLexeme()), removeNextToken().getTokenType(), Integer.valueOf(removeNextToken().getLexeme()));
+         System.out.print(op.evaluate());
+      }
    }
    
    public Token getNextToken(){
       return lexicalAnalyzer.getNextToken();
+   }
+   
+   public int getLastLine(){
+      Token lastItem =  myTokens.get(myTokens.size()-1);
+      int lastLine = lastItem.getLineNumber();
+      return lastLine;
    }
    
    
