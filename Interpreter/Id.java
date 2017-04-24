@@ -1,27 +1,21 @@
 public class Id extends ArithmeticExpression{
    private char id;
-   private int[] valueOfId = new int['z'+1];
+   private int[] valueOfId;
    
-   public Id(){
-   }
-   
-   public Id(char id){
+   public Id(char id, int[] valueOfId){
       this.id = id;
+      this.valueOfId = valueOfId;
    }
    
    public char getId(){
       return id;
    }
    
-   public void setId(char c){
-      id = c;
-   }
-   
    public void store(int value){
       valueOfId[id] = value;
    }
-   
-   public int getValue(){
+
+   public int run(){
       return valueOfId[id];
    }
 }

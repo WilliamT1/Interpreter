@@ -1,2 +1,3 @@
-public class ArithmeticExpression{
+public abstract class ArithmeticExpression{
+   public abstract int run();
 }

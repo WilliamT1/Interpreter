@@ -1,35 +1,28 @@
 public class ArithmeticOperator extends ArithmeticExpression{
-   int val1;
-   int val2;
+   ArithmeticExpression e1;
+   ArithmeticExpression e2;
    String op;
-   Id id = new Id();
    
-   public ArithmeticOperator(int val1, String op, int val2){
-      this.val1 = val1;
-      this.val2 = val2;
+   public ArithmeticOperator(ArithmeticExpression e1, String op, ArithmeticExpression e2){
+      this.e1 = e1;
+      this.e2 = e2;
       this.op = op;
    }
-   
-   public ArithmeticOperator(Id id, String op, int val1){
-      this.val1 = val1;
-      this.val2 = id.getValue();
-      this.op = op;
-   }
-   
-   public int evaluate(){
+      
+   public int run(){
       int finalVal = 0;
       switch(op){
          case "add_operator":
-            finalVal = val1 + val2;
+            finalVal = e1.run() + e2.run();
             break;
          case "sub_operator":
-            finalVal = val1 - val2;
+            finalVal = e1.run() - e2.run();
             break;
          case "mul_operator":
-            finalVal = val1 * val2;
+            finalVal = e1.run() * e2.run();
             break;
          case "div_operator":
-            finalVal = val1 / val2;
+            finalVal = e1.run() / e2.run();
             break;
       }
       return finalVal;

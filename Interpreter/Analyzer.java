@@ -38,9 +38,9 @@ public class Analyzer{
          tokenType = "lt_operator";
       else if(lexeme.equals("<=") || lexeme.equals("=<"))
          tokenType = "le_operator";
-      else if(lexeme.equals("(") || lexeme.equals("=<"))
+      else if(lexeme.equals("("))
          tokenType = "lparen_operator";
-      else if(lexeme.equals(")") || lexeme.equals("=<"))
+      else if(lexeme.equals(")"))
          tokenType = "rparen_operator";
          
       if(lexeme.equals("="))
@@ -62,6 +62,8 @@ public class Analyzer{
             tokenType = "while_stmt";
          else if(lexeme.equals("do"))
             tokenType = "do_stmt";
+         else if(lexeme.equals("function"))
+            tokenType = "function";
          else if(lexeme.equals("else"))
             tokenType = "else_stmt";
          else if(lexeme.equals("then"))
@@ -74,6 +76,8 @@ public class Analyzer{
             tokenType = "repeat_stmt";
          else if(lexeme.equals("until"))
             tokenType = "until_stmt";
+         else if(lexeme.equals("end"))
+            tokenType = "eof";
       }
       return tokenType;
    }
@@ -87,7 +91,17 @@ public class Analyzer{
       return myTokens.remove(0);
    }
    
+   public Token removeAfterToken(){
+      return myTokens.remove(1);
+   }
+   
+   public Token getAfterToken(){
+      return myTokens.get(1);
+   }
+   
    public Token getNextToken(){
+      if(myTokens.isEmpty())
+         return null;
       return myTokens.get(0);
    }
    

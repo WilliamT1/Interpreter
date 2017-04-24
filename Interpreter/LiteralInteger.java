@@ -4,7 +4,7 @@ public class LiteralInteger extends ArithmeticExpression{
       this.litInt = litInt;
    }
       
-   public int getLitInt(){
+   public int run(){
       return litInt;
    }
 }
