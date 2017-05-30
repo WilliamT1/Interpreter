@@ -3,7 +3,7 @@ Interprets a simple form of the Lua scripting language. Work in progress
 
 GRAMMAR FOR THE MINI-LUA LANGUAGE
 
-<program>→ function id( ) <block>end
+<program>→function id()<block>end
 
 <block>→ <statement>|<statement><block>
 
